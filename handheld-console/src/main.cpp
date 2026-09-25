@@ -5,6 +5,10 @@ int myFunction(int, int);
 
 void setup() {
   // put your setup code here, to run once:
+   Serial.begin(115200);
+    pinMode(19, OUTPUT);
+  digitalWrite(19, HIGH);   // backlight on
+  Serial.println("Backlight on, pin 19 is HIGH");
   int result = myFunction(2, 3);
 }
 
