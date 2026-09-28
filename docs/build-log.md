@@ -14,3 +14,12 @@ See [Display datasheet](2.8inch_SPI_Module_MSP2807_User_Manual_EN.pdf)
 - Wired ESP32 to screen
 See [Pin map](pin-map.md)
 - Wrote first test code: turns on display backlight
+
+## 29-09-2026
+
+- Added the library TFT_eSPI to platfromio.ini
+(Save the file. PlatformIO downloads the library automatically the next build)
+- TFT_eSPI doesn't auto-detect the pins — it needs a setup with
+    - Which display driver you have (ILI9341)
+    - Which GPIOs are wired for CS, DC, RESET, SDI, SCK
+- Configured TFT_eSPI for my wiring in platform.io
