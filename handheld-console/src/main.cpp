@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h> // loads the screen library
 
+
+
 // put function declarations here:
 int myFunction(int, int);
 
@@ -14,7 +16,27 @@ const int BTN_PIN_Right = 32;
 const int BTN_PIN_Up = 13;
 const int BTN_PIN_Left = 21;
 
+// for the buzzer
+const int BUZZER_PIN = 22; //defines the buzzer pin
+const int BUZZER_CHANNEL = 0; // any free LEDC channel
+
+unsigned long lastButtonCheck = 0; // last checked buttons
+const int buttonCheckInterval = 10;// how often to check buttons (ms) - replaces old delay(10) for butons
+
+unsigned long buzzerStartTime = 0; // when the current tone started playing
+bool buzzerPlaying = false;        // is a tone currently sounding?
+const int buzzerDuration = 200;    // how long a tone should last (ms)
+
+  // ===== FUNCTION: start playing a tone, without blocking =====
+void playTone(int frequency) {
+  ledcWriteTone(BUZZER_CHANNEL, frequency); // start the tone immediately
+  buzzerStartTime = millis();               // remember the exact moment it started
+  buzzerPlaying = true;                     // mark that a tone is currently active
+  }
+
 void setup() {
+
+  Serial.begin(115200);
 
   // setup for the screen
   tft.init();
@@ -40,6 +62,10 @@ void setup() {
   pinMode(BTN_PIN_Up, INPUT_PULLUP);
   pinMode(BTN_PIN_Left, INPUT_PULLUP);
 
+  // Buzzer
+  ledcSetup(BUZZER_CHANNEL, 2000, 8); // channel, initial frequency (Hz), resolution (bits)
+  ledcAttachPin(BUZZER_PIN, BUZZER_CHANNEL); // attach the buzzer pin to that channel
+
 }
 
 void loop() {
@@ -48,6 +74,9 @@ void loop() {
   //Button 1
   if (digitalRead(BTN_PIN_1) == LOW) {       // LOW means the button is pressed
     tft.fillCircle(240, 195, 10, TFT_BLUE);   // draws a blue Circle: x, y, radius, color
+    if (!buzzerPlaying) {                    // only trigger a new tone if one isn't already playing
+      playTone(1000);
+    }
   }
   else {
     tft.fillCircle(240, 195, 10, TFT_BLACK); // erase the circle when the buttons is released (by turning it the same color as the backround)
@@ -104,7 +133,11 @@ void loop() {
   tft.fillTriangle(55, 175, 55, 155, 35, 165, TFT_BLACK);  // erase it (same shape, background color)
 }
 
-  delay(10);   // small pause so the screen isn't redrawn nonstop (reduce flicker)
+      //Buzzer
+      if (buzzerPlaying && (millis() - buzzerStartTime >= buzzerDuration)) {
+    ledcWriteTone(BUZZER_CHANNEL, 0); // stop the sound
+    buzzerPlaying = false;            // mark that nothing is playing anymore
+  }
 }
 
 // put function definitions here:

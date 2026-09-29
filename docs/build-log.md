@@ -40,3 +40,9 @@ See [Pin map](pin-map.md)
 1. Two buttons where not working on press
     **Cause:**GPIO 34/35 are input-only, no internal pull-up, so they float
     **Fix** Moved from GPIO35 to GPIO13. Moved from GPIO43 to GPIO21
+
+## 30-09-2026
+- Found and Read documentation fro the buzzer KP006
+https://arduinomodules.info/ky-006-passive-buzzer-module/
+- wired the buzzer
+- programmed the buzzer

@@ -32,3 +32,11 @@
 |GPIO32 | GND (through Breadboard) | Button Right |
 |GPIO13 | GND (through Breadboard) | Button Up |
 |GPIO21 | GND (through Breadboard) | Button Left |
+
+## Buzzer KY-006
+
+| Connects to  | Label | Function |
+|-------|--------------------------|-------------|
+| GPIO22 | S | Signal - drive with a square wave (tone())|
+|   | middle | Not connected |
+| GND | - | Ground|
