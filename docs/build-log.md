@@ -23,3 +23,13 @@ See [Pin map](pin-map.md)
     - Which display driver you have (ILI9341)
     - Which GPIOs are wired for CS, DC, RESET, SDI, SCK
 - Configured TFT_eSPI for my wiring in platform.io
+- Deleted the test code for the backlight
+- Added new code for testing some display funktions
+- Issues encountered:
+    1. Backlight (pin 19) not turning on
+    **Cause:** tft.init() also configures TFT_BL (pin 19) internally, since it's defined in build_flags. Calling pinMode digitalWrite for pin 19 BEFORE tft.init() gets overridden — tft.init() resets it after.
+    **Fix:** Moved `pinMode(19, OUTPUT); digitalWrite(19, HIGH);` to AFTER the rest of the draw calls, so it runs last and isn't overridden.
+
+    2. Text not showing (screen color worked, text didn't)
+    **Cause:** No font loaded — TFT_eSPI needs at least one `LOAD_FONTx` defined, or text silently fails to appear-
+    **Fix:** Added `-DLOAD_GLCD=1` to `build_flags` in platformio.ini.
