@@ -19,3 +19,16 @@
 | GPIO23 | SDI (MOSI) | SPI data |
 | GPIO18 | SCK | SPI clock |
 | GPIO19 | LED | Backlight |
+
+## Butons
+
+| 1st Side | 2nd Side | Function |
+|-------|--------------------------|-------------|
+|GPIO14 | GND (through Breadboard) | Button 1 |
+|GPIO27 | GND (through Breadboard) | Button 2 |
+|GPIO26 | GND (through Breadboard) | Button 3 |
+|GPIO25 | GND (through Breadboard) | Button 4 |
+|GPIO33 | GND (through Breadboard) | Button Down |
+|GPIO32 | GND (through Breadboard) | Button Right |
+|GPIO13 | GND (through Breadboard) | Button Up |
+|GPIO21 | GND (through Breadboard) | Button Left |

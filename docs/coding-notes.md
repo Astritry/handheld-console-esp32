@@ -73,3 +73,29 @@ TFT_eSPI tft = TFT_eSPI();
   pinMode(19, OUTPUT); //sets the 19 as an output (to only SEND voltage).
   digitalWrite(19, HIGH); // Backlight on(set voltage to 3.3V).
 ```
+
+## Buttons
+
+- Coding for my first test buttons
+**main.cpp**, declaration after includes:
+```cpp
+const int BTN_PIN_1 = 14; // the button is wired to GPIO14
+```
+**main.cpp**, inside `void setup()`:
+```cpp
+pinMode(BTN_PIN_1, INPUT_PULLUP); //set the pin as an input, with the internal pull-up on
+```
+- Pull-up: a resistor inside the ESP32 gently connects the pin to 3.3V. So the default state is HIGH. The button connects the pin to GND, which overpowers the weak resistor and pulls it LOW.
+
+**main.cpp**, inside `void loop()`:
+```cpp
+if (digitalRead(BTN_PIN_1) == LOW) {       // LOW means the button is pressed
+  tft.fillCircle(240, 200, 10, TFT_BLUE);   // draws a blue Ellipse: x, y, radius, color
+}
+else {
+  tft.fillCircle(240, 200, 10, TFT_BLACK); // erase the elipse when the buttons is released (by turning it the same color as the backround)
+}
+delay(10);   // small pause so the screen isn't redrawn nonstop (reduce flicker)
+// ! Delay only one time at the end for the loop. (it delays the whole loop funktion not just one if else)
+```
+- Coded all future buttons like this

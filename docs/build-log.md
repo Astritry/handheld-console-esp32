@@ -33,3 +33,10 @@ See [Pin map](pin-map.md)
     2. Text not showing (screen color worked, text didn't)
     **Cause:** No font loaded — TFT_eSPI needs at least one `LOAD_FONTx` defined, or text silently fails to appear-
     **Fix:** Added `-DLOAD_GLCD=1` to `build_flags` in platformio.ini.
+
+- Wired buttons to my setup (GND to one side - GPIO another side)
+- Programing and testing buttons
+- Issues encountered:
+1. Two buttons where not working on press
+    **Cause:**GPIO 34/35 are input-only, no internal pull-up, so they float
+    **Fix** Moved from GPIO35 to GPIO13. Moved from GPIO43 to GPIO21
